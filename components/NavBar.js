@@ -14,14 +14,11 @@ export default function Navbar() {
         priority={true} // 최상단 이미지의 경우 사전에 로딩되어야 하므로 이 옵션을 널어주면 사용자가 빠르게 볼 수 있다.
       />
       <div>
-        <Link href={`/`} className={router.pathname === '/' ? 'active' : ''}>
-          Home
+        <Link href={`/`} legacyBehavior>
+          <a className={router.pathname === '/' ? 'active' : ''}>Home</a>
         </Link>
-        <Link
-          href={`/about`}
-          className={router.pathname === '/about' ? 'active' : ''}
-        >
-          About
+        <Link href={`/about`} legacyBehavior>
+          <a className={router.pathname === '/about' ? 'active' : ''}>About</a>
         </Link>
       </div>
       <style jsx>{`
