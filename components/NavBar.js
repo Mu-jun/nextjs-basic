@@ -1,14 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Navbar() {
+  const router = useRouter();
   return (
     <nav>
-      <Image src={`/vercel.svg`} alt="logo" width={283 / 2} height={64 / 2} />
+      <Image
+        src="/vercel.svg"
+        alt="logo"
+        width={parseInt(283 / 2)} // 소수점이 들어가면 안되므로 parseInt로 정수변환
+        height={parseInt(64 / 2)}
+        priority={true} // 최상단 이미지의 경우 사전에 로딩되어야 하므로 이 옵션을 널어주면 사용자가 빠르게 볼 수 있다.
+      />
       <div>
-        <Link href={`/`}>Home</Link>
-        {` `}
-        <Link href={`/about`}>About</Link>
+        <Link href={`/`} className={router.pathname === '/' ? 'active' : ''}>
+          Home
+        </Link>
+        <Link
+          href={`/about`}
+          className={router.pathname === '/about' ? 'active' : ''}
+        >
+          About
+        </Link>
       </div>
       <style jsx>{`
         nav {
