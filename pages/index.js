@@ -1,22 +1,29 @@
 import Seo from '@/components/Seo';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home({ results }) {
-  const [movies, setMovies] = useState();
-  // const getMovie = async () => {
-  //   const { results } = await (await fetch('/api/movies')).json();
-  //   setMovies(results);
-  // };
-  // useEffect(() => {
-  //   getMovie();
-  // }, []);
+  const router = useRouter();
+  const onClick = (id, title) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title,
+        },
+      },
+      `/movies/${id}`
+    );
+  };
   return (
     <div className="container">
       <Seo title={`Home`} />
       {!results && <h4>Loading...</h4>}
       {results?.map((movie) => (
-        <div className="movie" key={movie.id}>
+        <div
+          onClick={() => onClick(movie.id, movie.original_title)}
+          className="movie"
+          key={movie.id}
+        >
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt="movie poster"
@@ -30,6 +37,9 @@ export default function Home({ results }) {
           grid-template-columns: 1fr 1fr;
           padding: 20px;
           gap: 20px;
+        }
+        .movie {
+          cursor: pointer;
         }
         .movie img {
           max-width: 100%;
